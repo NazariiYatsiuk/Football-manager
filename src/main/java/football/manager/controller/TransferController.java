@@ -20,18 +20,17 @@ public class TransferController {
     private final TeamService teamService;
 
     @PatchMapping("/transfer-a-player")
-    public String transfer(@RequestParam("buyer-team-id") Long buyerTeamId,
+    public String transfer(@RequestParam("buyer-team-id") Long buyerId,
                            @RequestParam("player-id") Long playerId) {
         Player transferPlayer = playerService.findById(playerId);
-        Team buyerTeam = teamService.findById(buyerTeamId);
-        transferService.transfer(buyerTeam, transferPlayer);
-        String sellerTeamTitle = transferPlayer.getTeam().getTitle();
-
+        Team buyer = teamService.findById(buyerId);
+        Team seller = transferPlayer.getTeam();
+        transferService.transfer(buyer, transferPlayer);
         return "Player " + transferPlayer.getName() + " "
                 + transferPlayer.getSecondName()
                 + " was successfully transferred from "
-                + sellerTeamTitle + " to "
-                + buyerTeam.getTitle();
+                + seller + " to "
+                + buyer.getTitle();
     }
 
     @PatchMapping("/sign-free-agent")

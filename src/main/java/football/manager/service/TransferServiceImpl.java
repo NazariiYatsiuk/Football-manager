@@ -57,9 +57,7 @@ public class TransferServiceImpl implements TransferService {
                     + player.getSecondName()
                     + " does not have a contract with " + team.getTitle());
         }
-        team.getPlayers().remove(player);
         player.setTeam(null);
-        teamService.save(team);
         playerService.save(player);
     }
 }
