@@ -1,5 +1,6 @@
 package football.manager.service;
 
+import football.manager.exception.DataProcessingException;
 import football.manager.model.Player;
 import football.manager.repository.PlayerRepository;
 import java.math.BigDecimal;
@@ -8,8 +9,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository;
 
@@ -21,7 +23,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Player findById(Long id) {
         return playerRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("No player found by id " + id));
+                -> new DataProcessingException("No player found by id " + id));
     }
 
     @Override

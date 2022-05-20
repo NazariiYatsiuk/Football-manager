@@ -2,7 +2,7 @@ package football.manager.dto.request;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 
 @Getter
@@ -13,7 +13,7 @@ public class PlayerRequestDto {
     private String secondName;
     @Min(value = 14)
     private int age;
-    @Positive
+    @PositiveOrZero
     private int experienceInMonths;
     private Long teamId;
 }

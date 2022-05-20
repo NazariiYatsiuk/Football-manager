@@ -11,32 +11,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/transfer")
+@RequiredArgsConstructor
+@RequestMapping("/transfers")
 public class TransferController {
     private final TransferService transferService;
     private final PlayerService playerService;
     private final TeamService teamService;
 
-    @PatchMapping
+    @PatchMapping("/transfer-a-player")
     public String transfer(@RequestParam("buyer-team-id") Long buyerTeamId,
                            @RequestParam("player-id") Long playerId) {
         Player transferPlayer = playerService.findById(playerId);
-        Team previousTeam = transferPlayer.getTeam();
-        if (transferPlayer.getTeam().equals(teamService.findById(buyerTeamId))
-                || playerService.isFreeAgent(transferPlayer)) {
-            throw new RuntimeException("Player " + transferPlayer.getName() + " "
-                    + transferPlayer.getSecondName()
-                    + " can't be transferred, because he is a free agent "
-                    + "or already has existing contract with "
-                    + teamService.findById(buyerTeamId).getTitle());
-        }
-        transferService.transfer(buyerTeamId, playerId);
+        Team buyerTeam = teamService.findById(playerId);
+        String sellerTeamTitle = transferPlayer.getTeam().getTitle();
+        transferService.transfer(buyerTeam, transferPlayer);
         return "Player " + transferPlayer.getName() + " "
                 + transferPlayer.getSecondName()
                 + " was successfully transferred from "
-                + previousTeam.getTitle() + " to "
-                + teamService.findById(buyerTeamId).getTitle();
+                + sellerTeamTitle + " to "
+                + buyerTeam.getTitle();
+    }
+
+    @PatchMapping("/sign-free-agent")
+    public String signFreeAgent(@RequestParam(value = "team-id") Long teamId,
+                                @RequestParam(value = "player-id") Long playerId) {
+        Player player = playerService.findById(playerId);
+        Team team = teamService.findById(teamId);
+        transferService.signFreeAgent(team, player);
+        return player.getName() + " " + player.getSecondName()
+                + " was successfully signed by " + team.getTitle();
+    }
+
+    @PatchMapping("/fire-player")
+    public String dismissPlayer(@RequestParam(value = "team-id") Long teamId,
+                                @RequestParam(value = "player-id") Long playerId) {
+        Player player = playerService.findById(playerId);
+        Team team = teamService.findById(teamId);
+        transferService.firePlayer(team, player);
+        return player.getName() + " " + player.getSecondName()
+                + " was successfully dismissed from " + team.getTitle();
     }
 }

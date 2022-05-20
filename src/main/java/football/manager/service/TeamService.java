@@ -1,5 +1,6 @@
 package football.manager.service;
 
+import football.manager.model.Player;
 import football.manager.model.Team;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface TeamService {
 
     void delete(Long id);
 
-    void addPlayer(Long teamId, Long playerId);
+    void addPlayer(Team team, Player player);
 
-    void dismissPlayer(Long teamId, Long playerId);
+    void dismissPlayer(Team team, Player player);
 
-    void dismissAllPlayersFromTeam(Long teamId);
+    void dismissAllPlayersFromTeam(Team team);
 }

@@ -1,5 +1,7 @@
 package football.manager.service;
 
+import football.manager.exception.DataProcessingException;
+import football.manager.exception.TransferException;
 import football.manager.model.Player;
 import football.manager.model.Team;
 import football.manager.repository.TeamRepository;
@@ -7,8 +9,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final PlayerService playerService;
@@ -21,7 +23,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team findById(Long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No team found by id " + id));
+                .orElseThrow(() -> new DataProcessingException("No team found by id " + id));
     }
 
     @Override
@@ -35,28 +37,22 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void addPlayer(Long teamId, Long playerId) {
-        Team team = findById(teamId);
-        Player player = playerService.findById(playerId);
-        team.getPlayers().add(player);
+    public void addPlayer(Team team, Player player) {
         player.setTeam(team);
-        save(team);
         playerService.save(player);
     }
 
     @Override
-    public void dismissPlayer(Long teamId, Long playerId) {
-        Team team = findById(teamId);
-        Player player = playerService.findById(playerId);
-        team.getPlayers().remove(player);
-        player.setTeam(null);
-        save(team);
-        playerService.save(player);
+    public void dismissPlayer(Team team, Player player) {
+        if (team.getPlayers().contains(player)) {
+            player.setTeam(null);
+            playerService.save(player);
+        }
     }
 
     @Override
-    public void dismissAllPlayersFromTeam(Long teamId) {
-        findById(teamId)
+    public void dismissAllPlayersFromTeam(Team team) {
+        team
                 .getPlayers()
                 .forEach(p -> p.setTeam(null));
     }
