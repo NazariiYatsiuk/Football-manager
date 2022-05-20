@@ -102,8 +102,7 @@ Examples of request body:
     1) Clone this repository;
     2) Run `mvn package` and `java -jar target/football-manager-0.0.1-SNAPSHOT.jar`;
     3) After running the program tables `players` and `teams` are creating and data (6 players and 6 teams) is inserting inside by liquibase;
-    4) 
-    5) Postman collection with all required requests is on the following path: `src/main/resources/Football-manager collection.postman_collection.json`
-    6) App is based on H2 in memory DB. To enter into H2 console follow the next address `http://localhost:8080/h2-console` and use login and password from `src/main/resources/application.properties` file (by default - `sa` and `password`).
+    4) Postman collection with all required requests is on the following path: `src/main/resources/Football-manager collection.postman_collection.json`;
+    5) App is based on H2 in memory DB. To enter into H2 console follow the next address `http://localhost:8080/h2-console` and use login and password from `src/main/resources/application.properties` file (by default - `sa` and `password`).
 
 _P.S.: the most popular exceptions are handled by CustomGlobalExceptionHandler._
