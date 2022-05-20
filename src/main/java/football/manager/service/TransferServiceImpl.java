@@ -30,10 +30,8 @@ public class TransferServiceImpl implements TransferService {
         if (transferPrice.compareTo(buyer.getBalance()) > 0) {
             throw new TransferException("Buyer has not enough money to make this transfer");
         }
-        BigDecimal newBuyerBalance = buyer.getBalance().subtract(transferPrice);
-        buyer.setBalance(newBuyerBalance);
-        BigDecimal newSellerBalance = seller.getBalance().add(transferPrice);
-        seller.setBalance(newSellerBalance);
+        buyer.setBalance(buyer.getBalance().subtract(transferPrice));
+        seller.setBalance(seller.getBalance().add(transferPrice));
         teamService.dismissPlayer(seller, player);
         teamService.addPlayer(buyer, player);
         teamService.save(buyer);
