@@ -3,7 +3,6 @@ package football.manager.controller;
 import football.manager.dto.request.TeamRequestDto;
 import football.manager.dto.response.TeamResponseDto;
 import football.manager.model.Team;
-import football.manager.service.PlayerService;
 import football.manager.service.TeamService;
 import football.manager.service.mapper.TeamMapper;
 import java.util.Collections;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 @RequiredArgsConstructor

@@ -56,7 +56,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"Karim\",\r\n\"secondName\":\"Benzema\",\r\n\"age\":\"34\",\r\n\"experienceInMonths\":144,\r\n\"teamId\":216}"
+							"raw": "{\"name\":\"Karim\",\r\n\"secondName\":\"Benzema\",\r\n\"age\":\"34\",\r\n\"experienceInMonths\":216,\r\n\"teamId\":1}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/players",
@@ -201,14 +201,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/players/1",
+							"raw": "http://localhost:8080/teams/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"players",
+								"teams",
 								"1"
 							]
 						}
@@ -247,17 +247,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"Lionel\",\r\n\"secondName\":\"Messi\",\r\n\"age\":\"35\",\r\n\"experienceInMonths\":192}"
+							"raw": "{\"title\":\"PSG\",\r\n\"balance\":\"100000000000\",\r\n\"commissionPercent\":\"10\"}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/players/1",
+							"raw": "http://localhost:8080/teams/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"players",
+								"teams",
 								"1"
 							]
 						}
@@ -283,6 +283,41 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "TransferController",
+			"item": [
+				{
+					"name": "Transfer a player",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/transfers/transfer-a-player?buyer-team-id=3&player-id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transfers",
+								"transfer-a-player"
+							],
+							"query": [
+								{
+									"key": "buyer-team-id",
+									"value": "3"
+								},
+								{
+									"key": "player-id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Sign a free agent",
@@ -290,14 +325,14 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/teams/sign-free-agent?team-id=1&player-id=4",
+							"raw": "http://localhost:8080/transfers/sign-free-agent?team-id=1&player-id=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"teams",
+								"transfers",
 								"sign-free-agent"
 							],
 							"query": [
@@ -320,54 +355,20 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/teams/dismiss-player?team-id=3&player-id=1",
+							"raw": "http://localhost:8080/transfers/fire-player?team-id=3&player-id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"teams",
-								"dismiss-player"
+								"transfers",
+								"fire-player"
 							],
 							"query": [
 								{
 									"key": "team-id",
 									"value": "3"
-								},
-								{
-									"key": "player-id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "TransferController",
-			"item": [
-				{
-					"name": "Transfer a player",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/transfer?buyer-team-id=2&player-id=1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"transfer"
-							],
-							"query": [
-								{
-									"key": "buyer-team-id",
-									"value": "2"
 								},
 								{
 									"key": "player-id",

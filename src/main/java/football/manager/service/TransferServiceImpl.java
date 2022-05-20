@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
@@ -17,18 +16,19 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public void transfer(Team buyer, Player player) {
-        Team seller = player.getTeam();
-        BigDecimal transferPrice = playerService.getPriceWithCommission(player);
-        if (transferPrice.compareTo(buyer.getBalance()) > 0) {
-            throw new TransferException("Buyer has not enough money to make this transfer");
-        }
-        if (player.getTeam().equals(buyer)) {
-            throw new TransferException("You cannot transfer a player to the team he is already in");
-        }
         if (playerService.isFreeAgent(player)) {
             throw new TransferException("Player " + player.getName() + " "
                     + player.getSecondName()
                     + " can't be transferred, because he is a free agent");
+        }
+        if (player.getTeam().equals(buyer)) {
+            throw new TransferException("You cannot transfer "
+                    + "a player to the team he is already in");
+        }
+        Team seller = player.getTeam();
+        BigDecimal transferPrice = playerService.getPriceWithCommission(player);
+        if (transferPrice.compareTo(buyer.getBalance()) > 0) {
+            throw new TransferException("Buyer has not enough money to make this transfer");
         }
         BigDecimal newBuyerBalance = buyer.getBalance().subtract(transferPrice);
         buyer.setBalance(newBuyerBalance);

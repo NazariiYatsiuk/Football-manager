@@ -1,7 +1,6 @@
 package football.manager.service;
 
 import football.manager.exception.DataProcessingException;
-import football.manager.exception.TransferException;
 import football.manager.model.Player;
 import football.manager.model.Team;
 import football.manager.repository.TeamRepository;

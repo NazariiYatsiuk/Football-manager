@@ -23,9 +23,10 @@ public class TransferController {
     public String transfer(@RequestParam("buyer-team-id") Long buyerTeamId,
                            @RequestParam("player-id") Long playerId) {
         Player transferPlayer = playerService.findById(playerId);
-        Team buyerTeam = teamService.findById(playerId);
-        String sellerTeamTitle = transferPlayer.getTeam().getTitle();
+        Team buyerTeam = teamService.findById(buyerTeamId);
         transferService.transfer(buyerTeam, transferPlayer);
+        String sellerTeamTitle = transferPlayer.getTeam().getTitle();
+
         return "Player " + transferPlayer.getName() + " "
                 + transferPlayer.getSecondName()
                 + " was successfully transferred from "
